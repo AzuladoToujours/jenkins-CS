@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'NodoEsclavo'
+    }
     stages {
        stage('Checkout-git'){
               steps {
@@ -14,6 +16,11 @@ pipeline {
         stage('Test App') { 
             steps {
                  sh 'npm test'
+            }
+        }
+        stage('Run App') {
+            steps {
+                 sh 'npm start'
             }
         }
     }
