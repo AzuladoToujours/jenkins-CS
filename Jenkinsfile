@@ -1,26 +1,32 @@
 pipeline {
-    agent {
-        label 'NodoEsclavo'
+    agent any
+
+    options {
+        timeout(time:2, unit: 'MINUTES')
+    }
+
+    environment {
+        ARTIFACT_ID = 'azuladotoujours/jenkins-cs'
     }
     stages {
-       stage('Checkout-git'){
-              steps {
-               git poll: true, url: 'https://github.com/AzuladoToujours/jenkins-CS.git'    
-              }
-       }
-        stage('Install Requirements') {
-            steps {
-                sh 'npm install'
+        stage('Build'){
+            steps {    
+                script {
+                    dockerImage = docker.build "${env.ARTIFACT_ID}"
+                }
             }
         }
-        stage('Test App') { 
-            steps {
-                 sh 'npm test'
+        
+        stage('Publish'){
+            when {
+                branch 'master'
             }
-        }
-        stage('Run App') {
             steps {
-                 sh 'npm start'
+                script {
+                    docker.withRegistry("", "DockerHubCredentials"){
+                        dockerImage.push()
+                    }
+                }
             }
         }
     }
