@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-        ARTIFACT_ID = 'azuladotoujours/jenkins-cs',
-        SERVICE_NAME = 'jenkins-cs',
+        ARTIFACT_ID = 'azuladotoujours/jenkins-cs'
+        SERVICE_NAME = 'jenkins-cs'
         STACK_NAME = 'test'
     }
     stages {
