@@ -6,7 +6,9 @@ pipeline {
     }
 
     environment {
-        ARTIFACT_ID = 'azuladotoujours/jenkins-cs'
+        ARTIFACT_ID = 'azuladotoujours/jenkins-cs',
+        SERVICE_NAME = 'jenkins-cs',
+        STACK_NAME = 'test'
     }
     stages {
         stage('Build'){
@@ -27,6 +29,14 @@ pipeline {
                         dockerImage.push()
                     }
                 }
+            }
+        }
+        stage('Schedule Deploy'){
+            when {
+                branch 'master'
+            }
+            steps {
+                build job: 'cd-test', parameters: [string(name: 'ARTIFACT_ID', value:"${env.ARTIFACT_ID}"), string(name: '', value: "${}"), string(name: '', value: "${}")]
             }
         }
     }
