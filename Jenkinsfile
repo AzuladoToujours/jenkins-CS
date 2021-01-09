@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Schedule Deploy'){
             steps {
-                build job: 'cd-test', parameters: [string(name: 'ARTIFACT_ID', value:"${env.ARTIFACT_ID}"), string(name: '', value: "${}"), string(name: '', value: "${}")]
+                build job: 'cd-test', parameters: [string(name: 'ARTIFACT_ID', value:"${env.ARTIFACT_ID}"), string(name: 'SERVICE_NAME', value: "${SERVICE_NAME}"), string(name: 'STACK_NAME', value: "${STACK_NAME}")]
             }
         }
     }
