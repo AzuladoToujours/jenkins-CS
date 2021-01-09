@@ -1,4 +1,4 @@
-const sayHello = () => ({message: 'Testing en PlayWithDocker v2'});
+const sayHello = () => ({message: 'Hola Raulito desde Jenkins-cs'});
 
 const sayHelloController = (req,res) => {
     const hello = sayHello()
