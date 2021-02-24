@@ -1,4 +1,4 @@
-const sayHello = () => ({message: 'Holi'});
+const sayHello = () => ({message: 'testing push'});
 
 const sayHelloController = (req,res) => {
     const hello = sayHello()
