@@ -1,4 +1,4 @@
-const sayHello = () => ({message: 'Hola desde Jenkins-cs v4'});
+const sayHello = () => ({message: 'Holi'});
 
 const sayHelloController = (req,res) => {
     const hello = sayHello()
