@@ -31,6 +31,7 @@ pipeline {
                     echo "${DOCKER_PS}"
                     }
                 }
+            }
         }
     }
 }
