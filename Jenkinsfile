@@ -7,8 +7,7 @@ pipeline {
 
     environment {
         ARTIFACT_ID = 'azuladotoujours/jenkins-cs'
-        SERVICE_NAME = 'jenkins-cs'
-        STACK_NAME = 'test'
+        CONTAINER_NAME = 'jenkins-cs'
     }
     stages {
         stage('Build'){
@@ -19,19 +18,19 @@ pipeline {
             }
         }
         
-        stage('Publish'){
+        stage('Container running validation'){
             steps {
                 script {
-                    docker.withRegistry("", "DockerHubCredentials"){
-                        dockerImage.push()
+                    DOCKER_PS = sh (
+                    script: "docker ps --quiet --filter name=${env.CONTAINER_NAME}",
+                    returnStdout: true
+                    ).trim()
+                    if("${DOCKER_PS}"==""){
+                    echo "vacio"   
+                    }else {
+                    echo "${DOCKER_PS}"
                     }
                 }
-            }
-        }
-        stage('Schedule Deploy'){
-            steps {
-                build job: 'cd-test', parameters: [string(name: 'ARTIFACT_ID', value:"${env.ARTIFACT_ID}"), string(name: 'SERVICE_NAME', value: "${SERVICE_NAME}"), string(name: 'STACK_NAME', value: "${STACK_NAME}")], wait: false
-            }
         }
     }
 }
