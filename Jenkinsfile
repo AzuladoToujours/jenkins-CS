@@ -28,7 +28,7 @@ pipeline {
                     if("${DOCKER_PS}"==""){
                     echo "vacio"   
                     }else {
-                    echo "${DOCKER_PS}"
+                    echo "${DOCKER_PS} ESTÁ"
                     }
                 }
             }
