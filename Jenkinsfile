@@ -25,12 +25,15 @@ pipeline {
                     script: "docker ps --quiet --filter name=${env.CONTAINER_NAME}",
                     returnStdout: true
                     ).trim()
-                    if("${DOCKER_PS}"==""){
-                    echo "vacio"   
-                    }else {
-                    echo "${DOCKER_PS} ESTÁ"
+                    if("${DOCKER_PS}"!=""){
+                    sh (script: "docker rm -f ${env.CONTAINER_NAME}")
                     }
                 }
+            }
+        }
+        stage('Schedule Deploy'){
+            steps {
+                build job: 'test_cd', parameters: [string(name: 'ARTIFACT_ID', value:"${env.ARTIFACT_ID}"), string(name: 'CONTAINER_NAME', value: "${env.CONTAINER_NAME}")], wait: false
             }
         }
     }
